@@ -1,5 +1,6 @@
 import Axios from "axios"
 import humps from "humps"
+import {useEffect, useRef} from "react";
 
 export interface IApiResponse<T> {
     status: number
@@ -13,13 +14,16 @@ export interface IMetadata {
     totalPage: number
 }
 
+// CONFIG SERVICE
 const TOKEN_NAME: string = ""
 const baseUrl: string = ""
+
 const getToken = (): string | null => localStorage.getItem("token")
 
+// METHODS CALL API
 export const apiCall = async (
     url: string,
-    method: "GET" | "PUT" | "POST" | "PATCH" | "DELETE",
+    method: "GET" | "PUT" | "POST" | "DELETE",
     data: { [key: string]: any } | undefined,
     isToken: boolean
 ): Promise<IApiResponse<any>> => {
@@ -102,6 +106,11 @@ export const deleteRequest = (url: string, isToken: boolean = true, data?: { [ke
     return apiCall(url, "DELETE", data, isToken)
 }
 
-export const patchRequest = (url: string, isToken: boolean = true, data: { [key: string]: any }): Promise<IApiResponse<any>> => {
-    return apiCall(url, "PATCH", data, isToken)
+// CUSTOM HOOK
+export const usePrev = (value: any) => {
+    const ref = useRef<any>()
+    useEffect(() => {
+        ref.current = value
+    })
+    return ref.current
 }

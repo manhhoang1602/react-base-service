@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import "./service/Moment"
 import {deleteRequest, getRequest, IApiResponse, postRequest} from "./service/Basevices";
 
 function App() {
